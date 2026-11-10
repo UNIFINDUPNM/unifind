@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIFIND | UPNM Marketplace</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+        <a href="#" class="logo">UniFind<span>.</span></a>
+
+        
+<nav>
+    <a href="#" class="active">Home</a>
+    <a href="#categories">Categories</a>
+    <a href="#products">Marketplace</a>
+    <a href="#dashboard">My Dashboard</a>
+    <a href="#profile">My Profile</a>
+    <a href="#wishlist" onclick="renderWishlist()">My Wishlist ❤️</a>
+    <a href="#purchases">My Purchases 🛍️</a>
+</nav>
+
+
+        <div class="nav-actions">
+            <button class="login-btn" onclick="openLogin()">Login</button>
+            <button class="sell-btn" onclick="goToSell()">+ Sell Item</button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">THE UPNM STUDENT MARKETPLACE</span>
+
+            <h1>Find What You Need.<br>
+                <span>Sell What You Have.</span>
+            </h1>
+
+            <p>
+                Your campus, your marketplace. Discover products,
+                food and services offered by fellow UPNM students.
+            </p>
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" id="searchInput"
+                    placeholder="Search for products, food, services...">
+                <button onclick="searchProducts()">Search</button>
+            </div>
+
+<div class="filter-box">
+
+    <select id="categoryFilter" onchange="sortProducts()">
+        <option value="all">All Categories</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Food">Food</option>
+        <option value="Books">Books</option>
+        <option value="Services">Services</option>
+        <option value="Preloved">Preloved</option>
+        <option value="Others">Others</option>
+    </select>
+
+    <select id="sortPrice" onchange="sortProducts()">
+        <option value="">Sort by Price</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+    </select>
+
+</div>
+
+            <div class="hero-note">
+                <span>✓</span> Exclusive marketplace for UPNM students
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section" id="categories">
+        <div class="section-heading">
+            <div>
+                <span class="small-label">EXPLORE</span>
+                <h2>Shop by Category</h2>
+                <p>Find exactly what you're looking for.</p>
+            </div>
+        </div>
+
+        <div class="category-grid">
+            <button class="category-card" onclick="filterCategory('Fashion')">
+                <span class="category-icon">👕</span>
+                <strong>Fashion</strong>
+                <small>Clothes & accessories</small>
+            </button>
+
+            <button class="category-card" onclick="filterCategory('Food')">
+                <span class="category-icon">🍱</span>
+                <strong>Food & Drinks</strong>
+                <small>Homemade & snacks</small>
+            </button>
+
+            <button class="category-card" onclick="filterCategory('Books')">
+                <span class="category-icon">📚</span>
+                <strong>Books</strong>
+                <small>Notes & textbooks</small>
+            </button>
+
+            <button class="category-card" onclick="filterCategory('Services')">
+                <span class="category-icon">🛠️</span>
+                <strong>Services</strong>
+                <small>Student services</small>
+            </button>
+
+            <button class="category-card" onclick="filterCategory('Preloved')">
+                <span class="category-icon">♻️</span>
+                <strong>Preloved</strong>
+                <small>Secondhand items</small>
+            </button>
+
+            <button class="category-card" onclick="filterCategory('Others')">
+                <span class="category-icon">🛍️</span>
+                <strong>Others</strong>
+                <small>More student finds</small>
+            </button>
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section products-section" id="products">
+        <div class="section-heading product-heading">
+            <div>
+                <span class="small-label">MARKETPLACE</span>
+                <h2>Latest Listings</h2>
+                <p>Discover what fellow students are selling.</p>
+            </div>
+            <button class="view-all" onclick="filterCategory('All')">
+                View all →
+            </button>
+        </div>
+
+        <div class="filter-row">
+            <button class="filter-btn selected" onclick="filterCategory('All')">All Items</button>
+            <button class="filter-btn" onclick="filterCategory('Fashion')">Fashion</button>
+            <button class="filter-btn" onclick="filterCategory('Food')">Food</button>
+            <button class="filter-btn" onclick="filterCategory('Books')">Books</button>
+            <button class="filter-btn" onclick="filterCategory('Services')">Services</button>
+            <button class="filter-btn" onclick="filterCategory('Preloved')">Preloved</button>
+            <button class="filter-btn" onclick="filterCategory('Others')">Others</button>
+        </div>
+
+        <div id="productList" class="product-grid"></div>
+    </section>
+  
+<!-- MY PROFILE SECTION -->
+<section class="section profile-section" id="profile">
+
+    <div class="section-heading">
+        <span class="small-label">STUDENT ACCOUNT</span>
+        <h2>My Profile</h2>
+        <p>Manage your personal student information.</p>
+    </div>
+
+    <div class="profile-card">
+
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">
+                U
+            </div>
+
+            <div>
+                <h2 id="profileName">Student Name</h2>
+                <p id="profileEmail">student@upnm.edu.my</p>
+                <span class="student-badge">UPNM STUDENT</span>
+            </div>
+        </div>
+
+        <div class="profile-divider"></div>
+
+        <h3>Student Information</h3>
+
+        <div class="profile-info-grid">
+
+            <div class="profile-info">
+                <span>Matric Number</span>
+                <strong id="profileMatric">-</strong>
+            </div>
+
+            <div class="profile-info">
+                <span>College</span>
+                <strong id="profileCollege">-</strong>
+            </div>
+
+            <div class="profile-info">
+                <span>Faculty</span>
+                <strong id="profileFaculty">-</strong>
+            </div>
+
+            <div class="profile-info">
+                <span>Student Email</span>
+                <strong id="profileStudentEmail">-</strong>
+            </div>
+
+        </div>
+
+        <div class="profile-buttons">
+            <button onclick="editProfile()">Edit Profile</button>
+            <button onclick="openLogin()">Account Settings</button>
+        </div>
+
+    </div>
+
+</section>
+  
+    
+<!-- SELLER DASHBOARD -->
+<section class="section dashboard-section" id="dashboard">
+
+    <div class="section-heading">
+        <span class="small-label">SELLER CENTRE</span>
+        <h2>My Dashboard</h2>
+        <p>Manage and keep track of your product listings.</p>
+    </div>
+
+    <div class="dashboard-stats">
+
+        <div class="stat-card">
+            <span>Total Listings</span>
+            <h2 id="totalListings">0</h2>
+        </div>
+
+        <div class="stat-card">
+            <span>Categories Listed</span>
+            <h2 id="activeListings">0</h2>
+        </div>
+
+        <div class="stat-card">
+            <span>Seller Status</span>
+            <h2 class="status-text">Active</h2>
+        </div>
+
+    </div>
+
+    <div class="dashboard-heading">
+        <h3>My Product Listings</h3>
+        <button onclick="openSellForm()">+ Add New Product</button>
+    </div>
+
+    <div id="dashboardProducts" class="dashboard-products">
+    </div>
+
+</section>
+
+<!-- WISHLIST SECTION -->
+<section id="wishlist" class="section">
+    <h2>My Wishlist ❤️</h2>
+    <p>Products you have saved for later.</p>
+
+    <div id="wishlistProducts" class="product-grid"></div>
+</section>
+
+<!-- MY PURCHASES SECTION -->
+<section id="purchases" class="section">
+    <h2>My Purchases 🛍️</h2>
+    <p>Keep track of products you have purchased.</p>
+
+    <div id="purchaseProducts" class="product-grid"></div>
+</section>
+
+
+    <!-- SELL SECTION -->
+    <section class="sell-section" id="sell">
+        <div>
+            <span class="small-label">FOR UPNM STUDENTS</span>
+            <h2>Have Something to Sell?</h2>
+            <p>Turn your unused items, skills and creativity into extra income.</p>
+        </div>
+        <button onclick="openSellForm()">Start Selling →</button>
+    </section>
+
+    <!-- SELL FORM -->
+    <section class="section sell-form-section" id="sellFormSection">
+        <div class="form-container">
+            <span class="small-label">CREATE A LISTING</span>
+            <h2>Sell Your Item</h2>
+            <p>Fill in the details to showcase your product.</p>
+
+            <form id="sellForm">
+                <label>Product Name</label>
+                <input type="text" id="itemName" placeholder="Enter product name" required>
+
+                <label>Category</label>
+                <select id="itemCategory" required>
+                    <option value="">Select category</option>
+                    <option>Fashion</option>
+                    <option>Food</option>
+                    <option>Books</option>
+                    <option>Services</option>
+                    <option>Preloved</option>
+                    <option>Others</option>
+                </select>
+
+                <label>Price (RM)</label>
+                <input type="number" id="itemPrice" min="0" step="0.01" placeholder="e.g. 15.00" required>
+
+                <label>Description</label>
+                <textarea id="itemDescription" placeholder="Describe your product..." required></textarea>
+                <label>Product Image</label>
+<input type="file" id="itemImage" accept="image/*">
+
+<div id="imagePreview" style="margin-top: 10px;"></div>
+
+               
+<label>Seller Name</label>
+<input type="text" id="sellerName"
+    placeholder="Your name" required>
+
+<label>WhatsApp Number</label>
+<input type="tel" id="sellerPhone"
+    placeholder="e.g. 60123456789"
+    pattern="[0-9]{10,15}"
+    title="Enter your WhatsApp number using country code, numbers only"
+    required>
+
+<small>Include country code. Example: 60123456789</small>
+
+
+                <button type="submit" class="submit-btn">Publish Listing</button>
+            </form>
+            <p id="formMessage" class="form-message"></p>
+        </div>
+    </section>
+    
+<!-- PRODUCT DETAILS MODAL -->
+<div class="modal" id="productModal" onclick="closeProduct()">
+  <div class="modal-content product-modal" onclick="event.stopPropagation()">
+        <button class="close-btn" onclick="closeProduct()">×</button>
+
+        <div class="detail-image" id="detailEmoji">🛍️</div>
+
+        <span class="product-category" id="detailCategory"></span>
+        <h2 id="detailName">Product Name</h2>
+        <h3 id="detailPrice" class="detail-price"></h3>
+
+        <p id="detailDescription"></p>
+
+        <div class="seller-box">
+            <strong>Seller Information</strong>
+           <p id="detailSeller" class="clickable-seller" onclick="openSellerProfile()"></p>
+        </div>
+<div class="seller-rating-summary">
+    <h3>Seller Rating ⭐</h3>
+    <p id="sellerAverage">No ratings yet</p>
+</div>
+        <button class="submit-btn" onclick="contactSeller()">
+            Contact Seller
+        </button>
+        <button class="submit-btn" onclick="addToPurchases()">
+    🛍️ Add to My Purchases
+</button>
+
+<!-- SELLER REVIEW SECTION -->
+<div class="seller-review-section">
+
+    <h3>Rate This Seller ⭐</h3>
+    <p>Share your experience with this seller.</p>
+
+    <label for="reviewRating">Your Rating</label>
+    <select id="reviewRating">
+        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+        <option value="4">⭐⭐⭐⭐ Very Good</option>
+        <option value="3">⭐⭐⭐ Good</option>
+        <option value="2">⭐⭐ Fair</option>
+        <option value="1">⭐ Poor</option>
+    </select>
+
+    <label for="reviewComment">Your Comment</label>
+    <textarea
+        id="reviewComment"
+        placeholder="Write your experience here..."
+        rows="3"
+    ></textarea>
+
+    <button class="submit-btn" onclick="submitReview()">
+        Submit Review
+    </button>
+
+    <div id="productReviews"></div>
+
+</div>
+
+    </div>
+</div>
+
+
+  
+<!-- SELLER PROFILE MODAL -->
+<div class="modal" id="sellerProfileModal"
+     onclick="closeSellerProfile()">
+
+    <div class="modal-content product-modal"
+         onclick="event.stopPropagation()">
+
+        <button class="close-btn"
+                onclick="closeSellerProfile()">✕</button>
+
+        <div class="seller-profile-header">
+            <div class="seller-profile-avatar">👤</div>
+            <h2 id="sellerProfileName">Seller Name</h2>
+            <p id="sellerProfileRating">No ratings yet</p>
+        </div>
+
+        <hr>
+
+        <h3>Products by this Seller</h3>
+        <div id="sellerProfileProducts" class="product-grid"></div>
+
+        <button class="submit-btn"
+                onclick="contactProfileSeller()">
+            Contact Seller
+        </button>
+
+    </div>
+</div>
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal" id="editProductModal"
+     onclick="closeEditProduct()">
+
+    <div class="modal-content"
+         onclick="event.stopPropagation()">
+
+        <button class="close-btn"
+                onclick="closeEditProduct()">✕</button>
+
+        <h2>Edit Product</h2>
+        <p>Choose what you want to update.</p>
+
+        <label>What would you like to edit?</label>
+
+        <select id="editField" onchange="showEditFields()">
+            <option value="name">Product Name</option>
+            <option value="price">Price</option>
+            <option value="description">Description</option>
+            <option value="image">Product Image</option>
+            <option value="all">Edit All Details</option>
+        </select>
+
+        <div id="editNameField">
+            <label>Product Name</label>
+            <input type="text" id="editNameInput">
+        </div>
+
+        <div id="editPriceField">
+            <label>Price (RM)</label>
+            <input type="number" id="editPriceInput" min="0" step="0.01">
+        </div>
+
+        <div id="editDescriptionField">
+            <label>Description</label>
+            <textarea id="editDescriptionInput"></textarea>
+        </div>
+
+        <div id="editImageField">
+            <label>Product Image</label>
+            <input type="file" id="editImageInput" accept="image/*">
+            <div id="editImagePreview"></div>
+        </div>
+
+        <button class="submit-btn"
+                onclick="saveEditedProduct()">
+            Save Changes
+        </button>
+
+        <button class="wishlist-btn"
+                onclick="closeEditProduct()">
+            Cancel
+        </button>
+
+    </div>
+</div>
+ 
+<!-- LOGIN & REGISTER MODAL -->
+<div class="modal" id="loginModal">
+    <div class="modal-content auth-modal">
+
+        <button class="close-btn" onclick="closeLogin()">×</button>
+
+        <!-- LOGIN FORM -->
+        <div id="loginView">
+            <h2>Welcome Back!</h2>
+            <p>Login to your UNIFIND student account.</p>
+
+            <form id="loginForm">
+
+                <label>Student Email</label>
+                <input type="email" id="loginEmail"
+                    placeholder="Enter your email" required>
+
+                <label>Password</label>
+                <input type="password" id="loginPassword"
+                    placeholder="Enter your password" required>
+
+                <button type="submit" class="submit-btn">
+                    Login
+                </button>
+            </form>
+
+            <p class="auth-switch">
+                Don't have an account?
+                <a href="#" onclick="showRegister(); return false;">
+                    Register here
+                </a>
+            </p>
+
+            <p id="loginMessage" class="form-message"></p>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="registerView" style="display:none;">
+
+            <h2>Create Account</h2>
+            <p>Join the UNIFIND student community.</p>
+
+            <form id="registerForm">
+
+                <label>Full Name</label>
+                <input type="text" id="registerName"
+                    placeholder="Enter your full name" required>
+
+<label>Matric Number</label>
+<input type="text" id="registerMatric"
+    placeholder="Enter your matric number" required>
+
+<label>College</label>
+<input type="text" id="registerCollege"
+    placeholder="Enter your college" required>
+
+<label>Faculty</label>
+<input type="text" id="registerFaculty"
+    placeholder="Enter your faculty" required>
+
+                <label>UPNM Student Email</label>
+                <input type="email" id="registerEmail"
+                    placeholder="Enter your student email" required>
+
+                <label>Password</label>
+                <input type="password" id="registerPassword"
+                    placeholder="Create a password"
+                    minlength="6" required>
+
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword"
+                    placeholder="Confirm your password"
+                    minlength="6" required>
+
+                <button type="submit" class="submit-btn">
+                    Create Account
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+                Already have an account?
+                <a href="#" onclick="showLogin(); return false;">
+                    Login here
+                </a>
+            </p>
+
+            <p id="registerMessage" class="form-message"></p>
+        </div>
+
+        <!-- LOGGED IN VIEW -->
+        <div id="accountView" style="display:none;">
+            <h2>Welcome to UniFind!</h2>
+            <p id="welcomeName"></p>
+            <p id="welcomeEmail"></p>
+
+            <button class="submit-btn" onclick="logoutUser()">
+                Logout
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <a href="#" class="logo footer-logo">UniFind<span>.</span></a>
+        <p>Your Campus. Your Marketplace.</p>
+        <small>© 2026 UNIFIND. All Rights Reserved.</small>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
